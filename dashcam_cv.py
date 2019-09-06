@@ -28,22 +28,22 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# grab the raw NumPy array representing the image, then initialize the timestamp
 	# and occupied/unoccupied text
 	frame = frame.array
-	
+
 	#analyze difference
 	if Start == 1:
 		og_frame = np.copy(frame)
 		Start = 0
-		
+
 	og_frame_gray = cv2.cvtColor(og_frame, cv2.COLOR_BGR2GRAY)
 	frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
-	
+
 	if np.mean(diff_frame) > mThresh:
 		isMotion = 1
 		print("MOTION")
 		mEventStart = time.time()
-		
+
 		if mEvent == 0:
 			print("START RECORDING")
 			mEvent = 1
@@ -53,7 +53,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	else:
 		isMotion = 0
 		print("")
-		
+
 		if mEvent == 1:
 			if (time.time() - mEventStart) < 10:
 				rec.write(frame)
@@ -67,10 +67,10 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# show the frame
 	cv2.imshow("Original Frame", og_frame_gray)
 	cv2.imshow("Frame", frame_gray)
-	cv2.imshow("Difference Frame", diff_frame)
+	cv2.imshow("Motion Frame", diff_frame)
 
 	key = cv2.waitKey(1) & 0xFF
-	
+
 	og_frame = np.copy(frame)
 
 	# clear the stream in preparation for the next frame
@@ -79,5 +79,5 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# if the `q` key was pressed, break from the loop
 	if key == ord("q"):
 		break
-	
+
 cv2.destroyAllWindows
