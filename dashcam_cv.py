@@ -2,6 +2,7 @@
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
+import datetime
 import cv2
 import numpy as np
 
@@ -36,19 +37,20 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
 	og_frame_gray = cv2.cvtColor(og_frame, cv2.COLOR_BGR2GRAY)
 	frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
 	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
 
 	if np.mean(diff_frame) > mThresh:
 		isMotion = 1
 		print("MOTION")
 		mEventStart = time.time()
+		mNow = datetime.datetime.now()
+		mNow = now.strftime("%Y-%m-%d_%H:%M")
 
 		if mEvent == 0:
 			print("START RECORDING")
 			mEvent = 1
+		rec = cv2.VideoWriter(mNow+'.avi',fourcc,30.0/2, size)
 		rec.write(frame)
-
 
 	else:
 		isMotion = 0
