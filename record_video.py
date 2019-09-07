@@ -32,7 +32,7 @@ while(True):
 		# and occupied/unoccupied text
 		#frame = frame.array
 		rollArr.append(frame)
-		if len(rollArr) > 300:
+		if len(rollArr) > 100:
 			rollArr.pop(0)
 		print(len(rollArr))
 		#analyze difference
