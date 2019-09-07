@@ -79,7 +79,7 @@ while(True):
 
 		# Press Q on keyboard to stop recording
 		if cv2.waitKey(1) & 0xFF == ord('q'):
-		  break
+	  		break	
 
   # Break the loop
 	else:
