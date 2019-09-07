@@ -9,7 +9,7 @@ import sys
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
-size = (500, 500)
+size = (640, 480)
 camera.resolution = size
 rawCapture = PiRGBArray(camera, size=size)
 camera.framerate = 30
