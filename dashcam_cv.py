@@ -45,7 +45,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		print("MOTION")
 		mEventStart = time.time()
 		mNow = datetime.datetime.now()
-		mNow = now.strftime("%Y-%m-%d_%H:%M")
+		mNow = mNow.strftime("%Y-%m-%d_%H:%M")
 
 		if mEvent == 0:
 			print("START RECORDING")
