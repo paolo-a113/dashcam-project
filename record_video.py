@@ -53,8 +53,9 @@ while(True):
 				print("START RECORDING")
 				mEvent = 1
 				out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-				out.write(frame)
 				mNowStart = mNow
+			out.write(frame)
+
 
 		else:
 			isMotion = 0
