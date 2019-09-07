@@ -77,7 +77,7 @@ while(True):
 					print("STOP RECORDING")
 					out.release()
 					mEvent = 0
-					outB = cv2.VideoWriter("./vids/"+mNowStart_b+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+					outB = cv2.VideoWriter("./vids/"+mNowStart+"_b.avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 					for i in len(rollArr):
 						outB.write(rollArr[i])
 					outB.release()
