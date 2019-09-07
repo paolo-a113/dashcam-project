@@ -6,6 +6,7 @@ import datetime
 import cv2
 import numpy as np
 import sys
+import os
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -66,6 +67,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 				print("STOP RECORDING")
 				rec.release()
 				mEvent = 0
+				os.system("ffmpeg -i ./vids/" + mNow + ".avi "+ mNow + ".mp4")
+				os.system("rm ./vids/" + mNow + ".avi")
+
 
 	# show the frame
 	cv2.imshow("Original Frame", og_frame_gray)
