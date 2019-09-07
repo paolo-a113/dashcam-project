@@ -2,12 +2,15 @@ import cv2
 import numpy as np
 import time
 import datetime
+import array as arr
 
 
 og_frame = None
 Start = 1
 mThresh = 10
 mEvent = 0
+rollCount = 0
+rollArr = arr.array()
 
 # Create a VideoCapture object
 cap = cv2.VideoCapture(0)
@@ -21,9 +24,6 @@ if (cap.isOpened() == False):
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
 
-# Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
-out = cv2.VideoWriter('./vids/outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-
 while(True):
 	ret, frame = cap.read()
 
@@ -31,7 +31,8 @@ while(True):
 		# grab the raw NumPy array representing the image, then initialize the timestamp
 		# and occupied/unoccupied text
 		#frame = frame.array
-
+		rollArr.append(frame)
+		print(rollArr.shape)
 		#analyze difference
 		if Start == 1:
 			og_frame = np.copy(frame)
@@ -53,7 +54,6 @@ while(True):
 				print("START RECORDING")
 				mEvent = 1
 				out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-				mNowStart = mNow
 				out.write(frame)
 
 			if mEvent == 1:
