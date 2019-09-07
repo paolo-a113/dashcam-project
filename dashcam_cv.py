@@ -50,7 +50,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		if mEvent == 0:
 			print("START RECORDING")
 			mEvent = 1
-			rec = cv2.VideoWriter('./vids/'+mNow+'.avi',fourcc,25.0/2, size)
+			rec = cv2.VideoWriter('./vids/'+mNow+'.avi',fourcc,10, size)
 			rec.write(frame)
 
 	else:
