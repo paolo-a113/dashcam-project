@@ -63,10 +63,12 @@ while(True):
 		else:
 			isMotion = 0
 			print("")
-			rollArr.append(frame)
-			if len(rollArr) > 100:
-				rollArr.pop(0)
-			print(len(rollArr))
+
+			if mEvent == 0:
+				rollArr.append(frame)
+				if len(rollArr) > 100:
+					rollArr.pop(0)
+				print(len(rollArr))
 
 			if mEvent == 1:
 				if (time.time() - mEventStart) < 10:
