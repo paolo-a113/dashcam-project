@@ -23,7 +23,7 @@ mThresh = 10
 mEvent = 0
 
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-rec = cv2.VideoWriter('./vids/output.avi',fourcc,25.0/2, size)
+rec = cv2.VideoWriter('./vids/output.avi',fourcc,30.0, size)
 
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
