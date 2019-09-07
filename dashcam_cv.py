@@ -45,12 +45,12 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		print("MOTION")
 		mEventStart = time.time()
 		mNow = datetime.datetime.now()
-		mNow = mNow.strftime("%Y-%m-%d_%H:%M")
+		mNow = mNow.strftime("%Y-%m-%d_%H:%M:S")
 
 		if mEvent == 0:
 			print("START RECORDING")
 			mEvent = 1
-		rec = cv2.VideoWriter('./vids/'+mNow+'.avi',fourcc,30.0/2, size)
+		rec = cv2.VideoWriter('./vids/'+mNow+'.h264',fourcc,30.0/2, size)
 		rec.write(frame)
 
 	else:
