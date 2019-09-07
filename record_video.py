@@ -1,48 +1,43 @@
-# import the necessary packages
-from picamera.array import PiRGBArray
-from picamera import PiCamera
-import time
 import cv2
 import numpy as np
 
-# initialize the camera and grab a reference to the raw camera capture
-camera = PiCamera()
-size = (500, 500)
-camera.resolution = size
-rawCapture = PiRGBArray(camera, size=size)
-camera.framerate = 25
+# Create a VideoCapture object
+cap = cv2.VideoCapture(0)
 
-# allow the camera to warmup
-time.sleep(0.1)
+# Check if camera opened successfully
+if (cap.isOpened() == False):
+  print("Unable to read camera feed")
 
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
-rec = cv2.VideoWriter('output.avi',fourcc,20.0, size)
-# capture frames from the camera
+# Default resolutions of the frame are obtained.The default resolutions are system dependent.
+# We convert the resolutions from float to integer.
+frame_width = int(cap.get(3))
+frame_height = int(cap.get(4))
 
-startTime = time.time()
-for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	# grab the raw NumPy array representing the image, then initialize the timestamp
-	# and occupied/unoccupied text
-	frame = frame.array
+# Define the codec and create VideoWriter object.The output is stored in 'outpy.avi' file.
+out = cv2.VideoWriter('outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 
-	rec.write(frame)
-	
-	if (time.time() - startTime) > 10:
-		rec.release()
-		break
+while(True):
+  ret, frame = cap.read()
 
-	# show the frame
-	cv2.imshow("Frame", frame)
+  if ret == True:
 
-	key = cv2.waitKey(1) & 0xFF
+    # Write the frame into the file 'output.avi'
+    out.write(frame)
 
-	# clear the stream in preparation for the next frame
-	rawCapture.truncate(0)
+    # Display the resulting frame
+    cv2.imshow('frame',frame)
 
-	# if the `q` key was pressed, break from the loop
-	if key == ord("q"):
-		break
-	
-	
-		
-cv2.destroyAllWindows
+    # Press Q on keyboard to stop recording
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+      break
+
+  # Break the loop
+  else:
+    break
+
+# When everything done, release the video capture and video write objects
+cap.release()
+out.release()
+
+# Closes all the frames
+cv2.destroyAllWindows() 
