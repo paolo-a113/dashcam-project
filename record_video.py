@@ -32,7 +32,7 @@ while(True):
 		# and occupied/unoccupied text
 		#frame = frame.array
 		rollArr.append(frame)
-		print(rollArr.shape)
+		print(len(rollArr))
 		#analyze difference
 		if Start == 1:
 			og_frame = np.copy(frame)
