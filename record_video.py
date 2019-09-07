@@ -10,6 +10,8 @@ Start = 1
 mThresh = 10
 mEvent = 0
 rollCount = 0
+rollArr_B = []
+rollArr_A = []
 rollArr = []
 
 # Create a VideoCapture object
@@ -46,18 +48,19 @@ while(True):
 			print("MOTION")
 			print(np.mean(diff_frame))
 			mEventStart = time.time()
-			mNow = datetime.datetime.now()
-			mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
 
 			if mEvent == 0:
 				print("START RECORDING")
 				mEvent = 1
-				out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-				out.write(frame)
-				mNowStart = mNow
+				rollArr_A.append(frame)
+				# out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+				# out.write(frame)
+				mNow = datetime.datetime.now()
+				mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
 
 			if mEvent == 1:
-				out.write(frame)
+				# out.write(frame)
+				rollArr_A.append(frame)
 
 
 		else:
@@ -65,24 +68,26 @@ while(True):
 			print("")
 
 			if mEvent == 0:
-				rollArr.append(frame)
-				if len(rollArr) > 100:
-					rollArr.pop(0)
-				print(len(rollArr))
+				rollArr_B.append(frame)
+				if len(rollArr_B) > 100:
+					rollArr_B.pop(0)
+				print(len(rollArr_B))
 
 			if mEvent == 1:
 				if (time.time() - mEventStart) < 10:
-					out.write(frame)
+					rollArr_A.append(frame)
 					print(time.time()-mEventStart)
 
 				else:
-					print("STOP RECORDING")
-					out.release()
 					mEvent = 0
-					outB = cv2.VideoWriter("./vids/"+mNowStart+"_b.avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+					print("STOP RECORDING")
+					rollArr = rollArr_B + rollArr_A
+					out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 					for i in range(len(rollArr)):
-						outB.write(rollArr[i])
-					outB.release()
+						out.write(rollArr[i])
+					out.release()
+					rollArr_B = []
+					rollArr_A = []
 					rollArr = []
 					# os.system("ffmpeg -i ./vids/" + mNowStart + ".avi ./vids/"+ mNowStart + ".mp4")
 					# os.system("rm ./vids/" + mNowStart + ".avi")
