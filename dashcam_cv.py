@@ -4,6 +4,7 @@ from picamera import PiCamera
 import time
 import cv2
 import numpy as np
+import sys
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -28,6 +29,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# grab the raw NumPy array representing the image, then initialize the timestamp
 	# and occupied/unoccupied text
 	frame = frame.array
+	sys.stdout.buffer.write(frame.tobytes())
 
 	#analyze difference
 	if Start == 1:
