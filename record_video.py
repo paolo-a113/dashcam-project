@@ -1,6 +1,11 @@
 import cv2
 import numpy as np
 
+og_frame = None
+Start = 1
+mThresh = 10
+mEvent = 0
+
 # Create a VideoCapture object
 cap = cv2.VideoCapture(0)
 
