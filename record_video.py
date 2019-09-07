@@ -32,6 +32,8 @@ while(True):
 		# and occupied/unoccupied text
 		#frame = frame.array
 		rollArr.append(frame)
+		if len(rollArr) > 300:
+			rollArr.pop(0)
 		print(len(rollArr))
 		#analyze difference
 		if Start == 1:
