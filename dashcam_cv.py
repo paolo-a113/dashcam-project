@@ -68,7 +68,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 				print("STOP RECORDING")
 				rec.release()
 				mEvent = 0
-				os.system("ffmpeg -i ./vids/" + mNowStart + ".avi "+ mNowStart + ".mp4")
+				os.system("ffmpeg -i ./vids/" + mNowStart + ".avi ./vids/"+ mNowStart + ".mp4")
 				os.system("rm ./vids/" + mNowStart + ".avi")
 
 
