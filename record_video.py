@@ -72,14 +72,12 @@ while(True):
 					# os.system("ffmpeg -i ./vids/" + mNowStart + ".avi ./vids/"+ mNowStart + ".mp4")
 					# os.system("rm ./vids/" + mNowStart + ".avi")
 
-
-
 		# Display the resulting frame
 		cv2.imshow('frame',frame)
 
 		# Press Q on keyboard to stop recording
 		if cv2.waitKey(1) & 0xFF == ord('q'):
-	  		break	
+	  		break
 
   # Break the loop
 	else:
