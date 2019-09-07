@@ -22,7 +22,7 @@ while(True):
 	if ret == True:
 		# grab the raw NumPy array representing the image, then initialize the timestamp
 		# and occupied/unoccupied text
-		frame = frame.array
+		#frame = frame.array
 
 		#analyze difference
 		if Start == 1:
