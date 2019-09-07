@@ -44,6 +44,7 @@ while(True):
 		if np.mean(diff_frame) > mThresh:
 			isMotion = 1
 			print("MOTION")
+			print(np.mean(diff_frame))
 			mEventStart = time.time()
 			mNow = datetime.datetime.now()
 			mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
