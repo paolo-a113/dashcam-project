@@ -54,7 +54,10 @@ while(True):
 				mEvent = 1
 				out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 				mNowStart = mNow
-			out.write(frame)
+				out.write(frame)
+
+			if mEvent == 1:
+				out.write(frame)
 
 
 		else:
