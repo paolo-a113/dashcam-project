@@ -10,7 +10,7 @@ Start = 1
 mThresh = 10
 mEvent = 0
 rollCount = 0
-rollArr = arr.array()
+rollArr = []
 
 # Create a VideoCapture object
 cap = cv2.VideoCapture(0)
