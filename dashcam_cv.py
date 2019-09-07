@@ -53,6 +53,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 			mEvent = 1
 			rec = cv2.VideoWriter('./vids/'+mNow+'.avi',fourcc,10, size)
 			rec.write(frame)
+			mNowStart = mNow
 
 	else:
 		isMotion = 0
@@ -67,8 +68,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 				print("STOP RECORDING")
 				rec.release()
 				mEvent = 0
-				os.system("ffmpeg -i ./vids/" + mNow + ".avi "+ mNow + ".mp4")
-				os.system("rm ./vids/" + mNow + ".avi")
+				os.system("ffmpeg -i ./vids/" + mNowStart + ".avi "+ mNowStart + ".mp4")
+				os.system("rm ./vids/" + mNowStart + ".avi")
 
 
 	# show the frame
