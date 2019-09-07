@@ -17,7 +17,7 @@ frame_height = int(cap.get(4))
 out = cv2.VideoWriter('./vids/outpy.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 
 while(True):
-  ret, frame = cap.read()
+	ret, frame = cap.read()
 
 	if ret == True:
 		# grab the raw NumPy array representing the image, then initialize the timestamp
