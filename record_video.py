@@ -31,10 +31,7 @@ while(True):
 		# grab the raw NumPy array representing the image, then initialize the timestamp
 		# and occupied/unoccupied text
 		#frame = frame.array
-		rollArr.append(frame)
-		if len(rollArr) > 100:
-			rollArr.pop(0)
-		print(len(rollArr))
+
 		#analyze difference
 		if Start == 1:
 			og_frame = np.copy(frame)
@@ -57,6 +54,7 @@ while(True):
 				mEvent = 1
 				out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
 				out.write(frame)
+				mNowStart = mNow
 
 			if mEvent == 1:
 				out.write(frame)
@@ -65,6 +63,10 @@ while(True):
 		else:
 			isMotion = 0
 			print("")
+			rollArr.append(frame)
+			if len(rollArr) > 100:
+				rollArr.pop(0)
+			print(len(rollArr))
 
 			if mEvent == 1:
 				if (time.time() - mEventStart) < 10:
@@ -75,6 +77,11 @@ while(True):
 					print("STOP RECORDING")
 					out.release()
 					mEvent = 0
+					outB = cv2.VideoWriter("./vids/"+mNowStart_b+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+					for i in len(rollArr):
+						outB.write(rollArr[i])
+					outB.release()
+					rollArr = []
 					# os.system("ffmpeg -i ./vids/" + mNowStart + ".avi ./vids/"+ mNowStart + ".mp4")
 					# os.system("rm ./vids/" + mNowStart + ".avi")
 
