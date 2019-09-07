@@ -51,8 +51,7 @@ while(True):
 			if mEvent == 0:
 				print("START RECORDING")
 				mEvent = 1
-				rec = cv2.VideoWriter('./vids/'+mNow+'.avi',fourcc,5, size)
-				rec.write(frame)
+				out.write(frame)
 				mNowStart = mNow
 
 		else:
@@ -61,15 +60,15 @@ while(True):
 
 			if mEvent == 1:
 				if (time.time() - mEventStart) < 10:
-					rec.write(frame)
+					out.write(frame)
 					print(time.time()-mEventStart)
 
 				else:
 					print("STOP RECORDING")
-					rec.release()
+					out.release()
 					mEvent = 0
-					os.system("ffmpeg -i ./vids/" + mNowStart + ".avi ./vids/"+ mNowStart + ".mp4")
-					os.system("rm ./vids/" + mNowStart + ".avi")
+					# os.system("ffmpeg -i ./vids/" + mNowStart + ".avi ./vids/"+ mNowStart + ".mp4")
+					# os.system("rm ./vids/" + mNowStart + ".avi")
 
 
 
