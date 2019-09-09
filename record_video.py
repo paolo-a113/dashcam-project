@@ -3,7 +3,7 @@ import numpy as np
 import time
 import datetime
 import array as arr
-import threading
+import multiprocessing as mp
 
 
 og_frame = None
@@ -32,8 +32,6 @@ def convert_video(rollArr_B, rollArr_A, mNow):
     rollArr_A = []
     rollArr = []
 
-
-
 if __name__ == "__main__":
     # Create a VideoCapture object
     cap = cv2.VideoCapture(0)
@@ -46,6 +44,9 @@ if __name__ == "__main__":
     # We convert the resolutions from float to integer.
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
+
+    p = mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
+
 
     while(True):
     	ret, frame = cap.read()
@@ -80,7 +81,6 @@ if __name__ == "__main__":
     				# out.write(frame)
     				rollArr_A.append(frame)
 
-
     		else:
     			isMotion = 0
     			print("")
@@ -99,7 +99,8 @@ if __name__ == "__main__":
     				else:
     					mEvent = 0
     					print("STOP RECORDING")
-    					convert_video(rollArr_B, rollArr_A, mNow)
+    					p.start()
+                        p.join()
 
     		# Display the resulting frame
     		cv2.imshow('frame',frame)
@@ -114,7 +115,6 @@ if __name__ == "__main__":
 
     # When everything done, release the video capture and video write objects
     cap.release()
-    out.release()
 
     # Closes all the frames
     cv2.destroyAllWindows()
