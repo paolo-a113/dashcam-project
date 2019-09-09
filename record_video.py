@@ -96,11 +96,11 @@ if __name__ == "__main__":
     					rollArr_A.append(frame)
     					print(time.time()-mEventStart)
 
-                    else:
-                        mEvent = 0
-                        print("STOP RECORDING")
-                        p.start()
-                        p.join()
+                else:
+                    mEvent = 0
+                    print("STOP RECORDING")
+                    p.start()
+                    p.join()
 
     		# Display the resulting frame
     		cv2.imshow('frame',frame)
