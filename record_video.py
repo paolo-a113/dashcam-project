@@ -103,6 +103,7 @@ if __name__ == "__main__":
 						print("STOP RECORDING")
 						video_thread = threading.Thread(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
 						video_thread.start()
+						video_thread.join()
 
 			# Display the resulting frame
 			cv2.imshow('frame',frame)
