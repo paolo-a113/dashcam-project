@@ -75,8 +75,7 @@ if __name__ == "__main__":
 					print("START RECORDING")
 					mEvent = 1
 					rollArr_A.append(frame)
-					# out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-					# out.write(frame)
+
 					mNow = datetime.datetime.now()
 					mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
 
@@ -102,7 +101,6 @@ if __name__ == "__main__":
 					else:
 						mEvent = 0
 						print("STOP RECORDING")
-						fifo = open("./dataframes", "w")
 						rollArr = rollArr_B + rollArr_A
 						convert_video(rollArr, mNow)
 
