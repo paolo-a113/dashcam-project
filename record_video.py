@@ -108,7 +108,7 @@ if __name__ == "__main__":
 						mEvent = 0
 						print("STOP RECORDING")
 						out.release()
-						convert_before_video(rollArr_B, mNow)
+						#convert_before_video(rollArr_B, mNow)
 						rollArr_A = []
 
 			# Display the resulting frame
