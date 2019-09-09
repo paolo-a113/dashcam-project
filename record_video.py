@@ -26,12 +26,12 @@ def detect_motion(og_frame, frame):
 	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
 	return np.mean(diff_frame)
 
-def convert_video(rollArr, mNow):
-	out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame_width,frame_height))
-	for i in range(len(rollArr)):
-		out.write(rollArr[i])
-	out.release()
-	rollArr = []
+def convert_before_video(rollArr_B, mNow):
+	out_b = cv2.VideoWriter("./vids/"+mNow+"_b.avi",cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame_width,frame_height))
+	for i in range(len(rollArr_B)):
+		out_b.write(rollArr_B[i])
+	out_b.release()
+	rollArr_B = []
 
 if __name__ == "__main__":
 	# Create a VideoCapture object
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 	frame_width = int(cap.get(3))
 	frame_height = int(cap.get(4))
 
+	out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame_width,frame_height))
 
 
 	while(True):
@@ -72,14 +73,14 @@ if __name__ == "__main__":
 				if mEvent == 0:
 					print("START RECORDING")
 					mEvent = 1
-					rollArr_A.append(frame)
+					out.write(frame)
 
 					mNow = datetime.datetime.now()
 					mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
 
 				if mEvent == 1:
-					# out.write(frame)
-					rollArr_A.append(frame)
+					out.write(frame)
+					#rollArr_A.append(frame)
 
 			else:
 				isMotion = 0
@@ -93,16 +94,15 @@ if __name__ == "__main__":
 
 				if mEvent == 1:
 					if (time.time() - mEventStart) < 10:
-						rollArr_A.append(frame)
+						out.write(frame)
 						print(time.time()-mEventStart)
 
 					else:
 						mEvent = 0
 						print("STOP RECORDING")
-						rollArr = rollArr_B + rollArr_A
-						convert_video(rollArr, mNow)
+						out.release()
+						convert_before_video(rollArr_B, mNow)
 						rollArr_A = []
-						rollArr_B = []
 
 			# Display the resulting frame
 			cv2.imshow('frame',frame)
