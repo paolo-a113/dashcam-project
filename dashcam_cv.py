@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 import sys
 import os
+import threading
 
 # initialize the camera and grab a reference to the raw camera capture
 camera = PiCamera()
@@ -26,6 +27,24 @@ mEvent = 0
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 rec = cv2.VideoWriter('./vids/output.avi',fourcc,30.0, size)
 
+
+
+def detect_motion(og_frame, frame):
+	og_frame_gray = cv2.cvtColor(og_frame, cv2.COLOR_BGR2GRAY)
+	frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
+	return np.mean(diff_frame)
+
+
+def detect_motion(og_frame, frame):
+	og_frame_gray = cv2.cvtColor(og_frame, cv2.COLOR_BGR2GRAY)
+	frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
+	return np.mean(diff_frame)
+
+
+
+
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 	# grab the raw NumPy array representing the image, then initialize the timestamp
@@ -37,11 +56,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		og_frame = np.copy(frame)
 		Start = 0
 
-	og_frame_gray = cv2.cvtColor(og_frame, cv2.COLOR_BGR2GRAY)
-	frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
 
-	if np.mean(diff_frame) > mThresh:
+
+	if detect_motion(og_frame, frame) > mThresh:
 		isMotion = 1
 		print("MOTION")
 		mEventStart = time.time()
