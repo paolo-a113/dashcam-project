@@ -14,7 +14,7 @@ rollCount = 0
 rollArr_B = []
 rollArr_A = []
 rollArr = []
-mNow = []
+mNow = ''
 processes = []
 
 
