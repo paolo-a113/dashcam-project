@@ -4,6 +4,7 @@ import time
 import datetime
 import array as arr
 import threading
+import os
 
 
 og_frame = None
@@ -101,9 +102,10 @@ if __name__ == "__main__":
 					else:
 						mEvent = 0
 						print("STOP RECORDING")
-						video_thread = threading.Thread(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
-						video_thread.start()
-						video_thread.join()
+						fifo = open("./dataframes", "w")
+						rollArr = rollArr_B + rollArr_A
+						fifo.write(rollArr)
+						fifo.close()
 
 			# Display the resulting frame
 			cv2.imshow('frame',frame)
