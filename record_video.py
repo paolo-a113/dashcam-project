@@ -15,6 +15,8 @@ rollArr_B = []
 rollArr_A = []
 rollArr = []
 mNow = []
+processes = []
+
 
 
 def detect_motion(og_frame, frame):
@@ -32,7 +34,6 @@ def convert_video(rollArr_B, rollArr_A, mNow):
 	rollArr_B = []
 	rollArr_A = []
 	rollArr = []
-	processes = []
 
 if __name__ == "__main__":
 	# Create a VideoCapture object
