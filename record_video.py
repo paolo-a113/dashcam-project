@@ -23,98 +23,98 @@ def detect_motion(og_frame, frame):
 	return np.mean(diff_frame)
 
 def convert_video(rollArr_B, rollArr_A, mNow):
-    rollArr = rollArr_B + rollArr_A
-    out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame_width,frame_height))
-    for i in range(len(rollArr)):
-        out.write(rollArr[i])
-    out.release()
-    rollArr_B = []
-    rollArr_A = []
-    rollArr = []
+	rollArr = rollArr_B + rollArr_A
+	out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame_width,frame_height))
+	for i in range(len(rollArr)):
+		out.write(rollArr[i])
+	out.release()
+	rollArr_B = []
+	rollArr_A = []
+	rollArr = []
 
 if __name__ == "__main__":
-    # Create a VideoCapture object
-    cap = cv2.VideoCapture(0)
+	# Create a VideoCapture object
+	cap = cv2.VideoCapture(0)
 
-    # Check if camera opened successfully
-    if (cap.isOpened() == False):
-      print("Unable to read camera feed")
+	# Check if camera opened successfully
+	if (cap.isOpened() == False):
+	  print("Unable to read camera feed")
 
-    # Default resolutions of the frame are obtained.The default resolutions are system dependent.
-    # We convert the resolutions from float to integer.
-    frame_width = int(cap.get(3))
-    frame_height = int(cap.get(4))
+	# Default resolutions of the frame are obtained.The default resolutions are system dependent.
+	# We convert the resolutions from float to integer.
+	frame_width = int(cap.get(3))
+	frame_height = int(cap.get(4))
 
-    p = mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
-
-
-    while(True):
-    	ret, frame = cap.read()
-
-    	if ret == True:
-    		# grab the raw NumPy array representing the image, then initialize the timestamp
-    		# and occupied/unoccupied text
-    		#frame = frame.array
-
-    		#analyze difference
-    		if Start == 1:
-    			og_frame = np.copy(frame)
-    			Start = 0
+	p = mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
 
 
-    		if detect_motion(og_frame, frame) > mThresh:
-    			isMotion = 1
-    			print("MOTION")
-    			print(detect_motion(og_frame, frame))
-    			mEventStart = time.time()
+	while(True):
+		ret, frame = cap.read()
 
-    			if mEvent == 0:
-    				print("START RECORDING")
-    				mEvent = 1
-    				rollArr_A.append(frame)
-    				# out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
-    				# out.write(frame)
-    				mNow = datetime.datetime.now()
-    				mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
+		if ret == True:
+			# grab the raw NumPy array representing the image, then initialize the timestamp
+			# and occupied/unoccupied text
+			#frame = frame.array
 
-    			if mEvent == 1:
-    				# out.write(frame)
-    				rollArr_A.append(frame)
+			#analyze difference
+			if Start == 1:
+				og_frame = np.copy(frame)
+				Start = 0
 
-    		else:
-    			isMotion = 0
-    			print("")
 
-    			if mEvent == 0:
-    				rollArr_B.append(frame)
-    				if len(rollArr_B) > 100:
-    					rollArr_B.pop(0)
-    				print(len(rollArr_B))
+			if detect_motion(og_frame, frame) > mThresh:
+				isMotion = 1
+				print("MOTION")
+				print(detect_motion(og_frame, frame))
+				mEventStart = time.time()
 
-    			if mEvent == 1:
-    				if (time.time() - mEventStart) < 10:
-    					rollArr_A.append(frame)
-    					print(time.time()-mEventStart)
+				if mEvent == 0:
+					print("START RECORDING")
+					mEvent = 1
+					rollArr_A.append(frame)
+					# out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+					# out.write(frame)
+					mNow = datetime.datetime.now()
+					mNow = mNow.strftime("%Y-%m-%d_%H-%M-%S")
 
-                else:
-                    mEvent = 0
-                    print("STOP RECORDING")
-                    p.start()
-                    p.join()
+				if mEvent == 1:
+					# out.write(frame)
+					rollArr_A.append(frame)
 
-    		# Display the resulting frame
-    		cv2.imshow('frame',frame)
+			else:
+				isMotion = 0
+				print("")
 
-    		# Press Q on keyboard to stop recording
-    		if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+				if mEvent == 0:
+					rollArr_B.append(frame)
+					if len(rollArr_B) > 100:
+						rollArr_B.pop(0)
+					print(len(rollArr_B))
 
-      # Break the loop
-    	else:
-    		break
+				if mEvent == 1:
+					if (time.time() - mEventStart) < 10:
+						rollArr_A.append(frame)
+						print(time.time()-mEventStart)
 
-    # When everything done, release the video capture and video write objects
-    cap.release()
+				else:
+					mEvent = 0
+					print("STOP RECORDING")
+					p.start()
+					p.join()
 
-    # Closes all the frames
-    cv2.destroyAllWindows()
+			# Display the resulting frame
+			cv2.imshow('frame',frame)
+
+			# Press Q on keyboard to stop recording
+			if cv2.waitKey(1) & 0xFF == ord('q'):
+				break
+
+	  # Break the loop
+		else:
+			break
+
+	# When everything done, release the video capture and video write objects
+	cap.release()
+
+	# Closes all the frames
+	cv2.destroyAllWindows()
