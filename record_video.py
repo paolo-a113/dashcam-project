@@ -14,6 +14,7 @@ rollCount = 0
 rollArr_B = []
 rollArr_A = []
 rollArr = []
+mNow = []
 
 
 def detect_motion(og_frame, frame):
