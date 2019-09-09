@@ -101,7 +101,7 @@ if __name__ == "__main__":
 				else:
 					mEvent = 0
 					print("STOP RECORDING")
-					processes.append(p = mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow)))
+					processes.append(mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow)))
 					for pr in processes:
 						pr.start()
 						pr.join()
