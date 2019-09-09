@@ -59,9 +59,9 @@ if __name__ == "__main__":
 			#frame = frame.array
 
 			#analyze difference
-			if Start == 1:
-				og_frame = np.copy(frame)
-				Start = 0
+			og_frame = np.copy(frame)
+
+
 
 
 			if detect_motion(og_frame, frame) > mThresh:
@@ -105,7 +105,9 @@ if __name__ == "__main__":
 						rollArr_A = []
 
 			# Display the resulting frame
-			cv2.imshow('frame',frame)
+			cv2.imshow("Original Frame", og_frame_gray)
+			cv2.imshow("Frame", frame_gray)
+			cv2.imshow("Motion Frame", diff_frame)
 
 			# Press Q on keyboard to stop recording
 			if cv2.waitKey(1) & 0xFF == ord('q'):
