@@ -24,6 +24,9 @@ def detect_motion(og_frame, frame):
 	og_frame_gray = cv2.cvtColor(og_frame, cv2.COLOR_BGR2GRAY)
 	frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
+	cv2.imshow("Original Frame", og_frame_gray)
+	cv2.imshow("Frame", frame_gray)
+	cv2.imshow("Motion Frame", diff_frame)
 	return np.mean(diff_frame)
 
 def convert_before_video(rollArr_B, mNow):
@@ -105,9 +108,7 @@ if __name__ == "__main__":
 						rollArr_A = []
 
 			# Display the resulting frame
-			cv2.imshow("Original Frame", og_frame_gray)
-			cv2.imshow("Frame", frame_gray)
-			cv2.imshow("Motion Frame", diff_frame)
+
 
 			# Press Q on keyboard to stop recording
 			if cv2.waitKey(1) & 0xFF == ord('q'):
