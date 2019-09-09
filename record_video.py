@@ -32,21 +32,20 @@ def convert_video(rollArr_B, rollArr_A, mNow):
     rollArr_A = []
     rollArr = []
 
-def setup():
-        # Create a VideoCapture object
-        cap = cv2.VideoCapture(0)
 
-        # Check if camera opened successfully
-        if (cap.isOpened() == False):
-          print("Unable to read camera feed")
-
-        # Default resolutions of the frame are obtained.The default resolutions are system dependent.
-        # We convert the resolutions from float to integer.
-        frame_width = int(cap.get(3))
-        frame_height = int(cap.get(4))
 
 if __name__ == "__main__":
-    setup()
+    # Create a VideoCapture object
+    cap = cv2.VideoCapture(0)
+
+    # Check if camera opened successfully
+    if (cap.isOpened() == False):
+      print("Unable to read camera feed")
+
+    # Default resolutions of the frame are obtained.The default resolutions are system dependent.
+    # We convert the resolutions from float to integer.
+    frame_width = int(cap.get(3))
+    frame_height = int(cap.get(4))
 
     while(True):
     	ret, frame = cap.read()
