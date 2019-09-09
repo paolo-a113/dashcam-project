@@ -26,7 +26,7 @@ def detect_motion(og_frame, frame):
 	diff_frame = cv2.absdiff(og_frame_gray, frame_gray)
 	return np.mean(diff_frame)
 
-def convert_video(rollArr_B, rollArr_A, mNow):
+def convert_video(rollArr, mNow):
 	rollArr = rollArr_B + rollArr_A
 	out = cv2.VideoWriter("./vids/"+mNow+".avi",cv2.VideoWriter_fourcc('M','J','P','G'), 30, (frame_width,frame_height))
 	for i in range(len(rollArr)):
@@ -104,8 +104,7 @@ if __name__ == "__main__":
 						print("STOP RECORDING")
 						fifo = open("./dataframes", "w")
 						rollArr = rollArr_B + rollArr_A
-						fifo.write(rollArr)
-						fifo.close()
+						convert_video(rollArr, mNow)
 
 			# Display the resulting frame
 			cv2.imshow('frame',frame)
