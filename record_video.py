@@ -3,7 +3,7 @@ import numpy as np
 import time
 import datetime
 import array as arr
-import multiprocessing as mp
+import threading
 
 
 og_frame = None
@@ -101,10 +101,8 @@ if __name__ == "__main__":
 				else:
 					mEvent = 0
 					print("STOP RECORDING")
-					processes.append(mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow)))
-					for pr in processes:
-						pr.start()
-						pr.join()
+					video_thread.Thread(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
+					video_thread.start()
 
 			# Display the resulting frame
 			cv2.imshow('frame',frame)
