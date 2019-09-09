@@ -101,7 +101,7 @@ if __name__ == "__main__":
 				else:
 					mEvent = 0
 					print("STOP RECORDING")
-					video_thread.Thread(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
+					video_thread = threading.Thread(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
 					video_thread.start()
 
 			# Display the resulting frame
