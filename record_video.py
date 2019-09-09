@@ -32,6 +32,7 @@ def convert_video(rollArr_B, rollArr_A, mNow):
 	rollArr_B = []
 	rollArr_A = []
 	rollArr = []
+	processes = []
 
 if __name__ == "__main__":
 	# Create a VideoCapture object
@@ -46,7 +47,6 @@ if __name__ == "__main__":
 	frame_width = int(cap.get(3))
 	frame_height = int(cap.get(4))
 
-	p = mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow))
 
 
 	while(True):
@@ -100,8 +100,10 @@ if __name__ == "__main__":
 				else:
 					mEvent = 0
 					print("STOP RECORDING")
-					p.start()
-					p.join()
+					processes.append(p = mp.Process(target=convert_video, args=(rollArr_B, rollArr_A, mNow)))
+					for pr in processes:
+						pr.start()
+						pr.join()
 
 			# Display the resulting frame
 			cv2.imshow('frame',frame)
