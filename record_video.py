@@ -62,7 +62,9 @@ if __name__ == "__main__":
 			#frame = frame.array
 
 			#analyze difference
-			og_frame = np.copy(frame)
+			if Start == 1:
+				og_frame = np.copy(frame)
+				Start = 0
 
 
 
@@ -71,6 +73,8 @@ if __name__ == "__main__":
 				isMotion = 1
 				print("MOTION")
 				print(detect_motion(og_frame, frame))
+				if Start == 0:
+					og_frame = np.copy(frame)
 				mEventStart = time.time()
 
 				if mEvent == 0:
